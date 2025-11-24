@@ -1,0 +1,1 @@
+Why a particular scaler was used for the normalization process?
