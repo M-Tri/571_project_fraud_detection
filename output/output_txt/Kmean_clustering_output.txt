@@ -1,0 +1,17 @@
+Loading graph object
+Starting clustering
+Silhouette Score: 0.7589796071211847
+
+=== CLUSTER ANALYSIS ===
+Cluster | Nodes | POI Found in this cluster | Percentage
+-------------------------------------------------------
+   0 |        229 |                    2 |  0.87%
+   1 |      43891 |                    2 |  0.00%
+   2 |          3 |                    2 | 66.67%
+   3 |         50 |                    0 |  0.00%
+   4 |         11 |                    0 |  0.00%
+   5 |         11 |                    0 |  0.00%
+   6 |         56 |                    1 |  1.79%
+   7 |         85 |                    0 |  0.00%
+   8 |       1076 |                    9 |  0.84%
+   9 |       3352 |                    0 |  0.00%

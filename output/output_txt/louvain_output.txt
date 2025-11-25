@@ -1,0 +1,15 @@
+Starting Behavioral Similarity Analysis...
+Connect similar people
+Similarity graph is created
+Run Louvain on new similarity graph
+Silhouette Score: 0.94
+-------------------------
+Community   Fraudsters
+-------------------------
+1            5           
+3            8           
+7            1           
+17           1           
+68           1           
+
+Total communities with fraudsters: 5

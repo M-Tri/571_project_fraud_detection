@@ -45,7 +45,6 @@ Thumbs.db
 *.pkl
 *.pickle
 *.csv
-*.xlsx
 *.json
 *.data
 *.dat
