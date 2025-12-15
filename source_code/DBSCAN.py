@@ -8,7 +8,7 @@ from sklearn.metrics import silhouette_score
 print("Loading graph object")
 with open("../data_files/graph_object/enron_graph.pkl", "rb") as f:
     G = pickle.load(f)
-
+poi_nodes = []
 def get_clusters_DBSCAN(G ):
     
     node_features = {}
@@ -36,6 +36,11 @@ def get_clusters_DBSCAN(G ):
             len(list(G.predecessors(node))),
         ]
 
+
+        if G.nodes[node].get('is_poi', False):
+            poi_nodes.append(node)
+
+
         # Add department as numerical code
         department = G.nodes[node].get('department', 'Unknown')
 
@@ -45,6 +50,8 @@ def get_clusters_DBSCAN(G ):
 
         # Map people to their attribute vector for later retrieval
         node_features[node] = attributes_vector
+
+
 
     
     # Convert to arrays for sklearn
@@ -64,10 +71,12 @@ def get_clusters_DBSCAN(G ):
     results = []
     for i, node in enumerate(nodes_list):
         is_poi = G.nodes[node].get('is_poi', False)
+        name = G.nodes[node].get('name', str(node))
         results.append({
             'node': node,
             'cluster': cluster_labels[i],
             'is_poi': is_poi,
+            'name': name,
         })
     
     return results
@@ -77,12 +86,23 @@ cluster_results = get_clusters_DBSCAN(G)
 print("CLUSTER ANALYSIS TABLE")
 poi_count = {}
 cluster_sizes = {}
-
+flagged_poi_names = []
 for result in cluster_results:
     cluster = result['cluster']
     cluster_sizes[cluster] = cluster_sizes.get(cluster, 0) + 1
     if result['is_poi']:
         poi_count[cluster] = poi_count.get(cluster, 0) + 1
+
+
+# --- Print only POIs in NOISE cluster (-1) ---
+print("\nPOIs in NOISE cluster (-1):")
+for result in cluster_results:
+    if result['cluster'] == -1 and result['is_poi']:
+        node = result['node']
+        name = result['name']
+        print(f"Node: {name}, Is POI: {result['is_poi']}")
+
+
 
 print("Cluster | Size | POIs | POI % | Type")
 print("-" * 50)
