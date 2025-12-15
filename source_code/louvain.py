@@ -5,6 +5,9 @@ import community as community_louvain
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
+import matplotlib.pyplot as plt
+import networkx as nx
+
 
 
 """
@@ -15,6 +18,20 @@ people with similar communication behavior.
 
 with open("../data_files/graph_object/enron_graph.pkl", "rb") as f:
     G = pickle.load(f)
+
+def plot_communities(graph, partition, title="Louvain communities"):
+    # partition is a dict: node -> community_id
+    pos = nx.spring_layout(graph, k=0.15, seed=42)  # deterministic layout
+    communities = [partition[node] for node in graph.nodes()]
+
+    plt.figure(figsize=(10, 8))
+    nx.draw_networkx_nodes(graph, pos, node_size=30, node_color=communities, cmap='tab20')
+    nx.draw_networkx_edges(graph, pos, alpha=0.2, width=0.5)
+    plt.title(title)
+    plt.axis('off')
+    plt.tight_layout()
+
+    plt.savefig("../data_files/figures/louvain_communities.png", dpi=200)
 
 def build_new_similarity_graph_based_on_old(original_graph):
     
@@ -107,6 +124,8 @@ def detect_communities(new_similarity_graph):
 print("Starting Behavioral Similarity Analysis...")
 new_similarity_graph, features_scaled, nodes = build_new_similarity_graph_based_on_old(G)
 partition, community_labels = detect_communities(new_similarity_graph)
+
+#plot_communities(new_similarity_graph, partition, title="Behavioral similarity graph (Louvain communities)")
 
 ############### Print Results ##################
 # Calculate silhouette score

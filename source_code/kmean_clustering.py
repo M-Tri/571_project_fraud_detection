@@ -6,6 +6,23 @@ import pickle
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.cluster import KMeans 
 from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+def plot_clusters_2d(features_scaled, labels, title="Cluster visualization (PCA)"):
+    pca = PCA(n_components=2)
+    reduced = pca.fit_transform(features_scaled)
+
+    plt.figure(figsize=(8, 6))
+    scatter = plt.scatter(reduced[:, 0], reduced[:, 1], c=labels, cmap='tab10', alpha=0.8, s=25)
+    plt.title(title)
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    cbar = plt.colorbar(scatter)
+    cbar.set_label("Cluster ID")
+
+    plt.savefig("../data_files/figures/kmeans_clusters.png", dpi=200)
+    
 
 
 # Load your graph object.
@@ -55,6 +72,7 @@ def form_clusters(G, num_of_clusters):
     kmeans = KMeans(n_clusters = num_of_clusters, random_state=42)
     # Learn and assign to a cluster
     cluster_labels = kmeans.fit_predict(features_scaled)
+    #plot_clusters_2d(features_scaled, cluster_labels, title="KMeans clusters (PCA projection)")
     
     silhouette_avg = silhouette_score(features_scaled, cluster_labels)
     print(f"Silhouette Score: {silhouette_avg}")
