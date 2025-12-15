@@ -3,6 +3,23 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+def plot_clusters_2d(features_scaled, labels, title="Cluster visualization (PCA)"):
+    pca = PCA(n_components=2)
+    reduced = pca.fit_transform(features_scaled)
+
+    plt.figure(figsize=(8, 6))
+    scatter = plt.scatter(reduced[:, 0], reduced[:, 1], c=labels, cmap='tab10', alpha=0.8, s=25)
+    plt.title(title)
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    cbar = plt.colorbar(scatter)
+    cbar.set_label("Cluster ID")
+    plt.tight_layout()
+
+    plt.savefig("../data_files/figures/dbscan_clusters.png", dpi=200)
 
 # Load your graph object.
 print("Loading graph object")
@@ -59,7 +76,7 @@ def get_clusters_DBSCAN(G ):
     # Use DBSCAN with very sensitive setting. The point is to use noise to detect and not clusters.
     dbscan = DBSCAN(eps = 0.03, min_samples = 2)
     cluster_labels = dbscan.fit_predict(features_scaled)
-  
+    #plot_clusters_2d(features_scaled, cluster_labels, title="DBSCAN clusters (PCA projection)")
 
     results = []
     for i, node in enumerate(nodes_list):
