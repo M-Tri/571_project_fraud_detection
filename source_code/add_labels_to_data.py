@@ -133,4 +133,4 @@ print(f"Total count is {count}")
 
 print("Saving data to CSV file")
 # Save CSV
-df.to_csv("../data_files/labeled_emails.csv")
+df.to_csv("../data_files/labeled_emails.csv", index=False)

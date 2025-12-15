@@ -71,10 +71,10 @@ for root, dirs, files in os.walk(input_path_folder):
         
         all_data.append(data)
 
-print(f"Folder Processed and is being saved to .csv file")
+print(f"Folder Processed and is being saved to {output_path_folder}")
 
 # Create spreadsheet
 df = pd.DataFrame(all_data)
 
 # Convert to .csv
-df.to_csv(output_path_folder)
+df.to_csv(output_path_folder, index=False)
