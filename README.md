@@ -14,6 +14,10 @@
     └── source_data_extraction.py
 ```
 
+**Upload data from : https://www.cs.cmu.edu/~enron/ or with direct link [of May 7, 2015 Version of dataset](https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz)**
+Note that this data is (about 1.7Gb, tarred and gzipped).
+
+
 # ***Graph-Based Anomaly Detection in Enron Emails***
 
 This commit finalizes the "Fraud Detection In Enrol emails using Graph Based Anomaly Detection" report, including all code, processed data, results, and the final manuscript.
